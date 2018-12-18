@@ -10,19 +10,28 @@ export default class App extends Component {
     };
 
     placeAddedHandler = placeName => {
-        this.setState(prevState => {
-            console.log(prevState);
-            return {
-                places: prevState.places.concat(placeName)
-            };
-        });
+        this.setState(prevState => ({
+            places: prevState.places.concat({
+                key: new Date().getTime(),
+                value: placeName
+            })
+        }));
+    };
+
+    placeDeletedHandler = key => {
+        this.setState(prevState => ({
+            places: prevState.places.filter(place => place.key !== key)
+        }));
     };
 
     render() {
         return (
             <View style={styles.container}>
                 <PlaceInput onPlaceAdded={this.placeAddedHandler} />
-                <PlaceList places={this.state.places} />
+                <PlaceList
+                    places={this.state.places}
+                    onItemDeleted={this.placeDeletedHandler}
+                />
             </View>
         );
     }
