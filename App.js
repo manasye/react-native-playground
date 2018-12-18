@@ -1,14 +1,14 @@
+/* eslint-disable import/no-named-as-default */
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import PlaceInput from './src/components/PlaceInput/PlaceInput';
 import PlaceList from './src/components/PlaceList/PlaceList';
 import placeImage from './src/assets/nat.jpg';
+import PlaceDetail from './src/components/PlaceDetail/PlaceDetail';
 
 export default class App extends Component {
-    state = {
-        places: []
-    };
+    state = { places: [], selectedPlace: null };
 
     placeAddedHandler = placeName => {
         this.setState(prevState => ({
@@ -20,19 +20,37 @@ export default class App extends Component {
         }));
     };
 
-    placeDeletedHandler = key => {
+    placeSelectedHandler = key => {
         this.setState(prevState => ({
-            places: prevState.places.filter(place => place.key !== key)
+            selectedPlace: prevState.places.find(place => place.key === key)
         }));
+    };
+
+    placeDeletedHandler = () => {
+        this.setState(prevState => ({
+            places: prevState.places.filter(
+                place => place.key !== prevState.selectedPlace.key
+            ),
+            selectedPlace: null
+        }));
+    };
+
+    modalClosedHandler = () => {
+        this.setState({ selectedPlace: null });
     };
 
     render() {
         return (
             <View style={styles.container}>
+                <PlaceDetail
+                    selectedPlace={this.state.selectedPlace}
+                    onItemDeleted={this.placeDeletedHandler}
+                    onModalClosed={this.modalClosedHandler}
+                />
                 <PlaceInput onPlaceAdded={this.placeAddedHandler} />
                 <PlaceList
                     places={this.state.places}
-                    onItemDeleted={this.placeDeletedHandler}
+                    onItemSelected={this.placeSelectedHandler}
                 />
             </View>
         );

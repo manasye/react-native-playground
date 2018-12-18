@@ -41,11 +41,11 @@ class PlaceInput extends Component {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        // flex: 1,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 15
     },
     placeInput: {
         width: '70%'
