@@ -1,6 +1,16 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 import React from 'react';
-import { Modal, View, Image, Text, Button, StyleSheet } from 'react-native';
+import {
+    Modal,
+    View,
+    Image,
+    Text,
+    Button,
+    StyleSheet,
+    TouchableOpacity
+} from 'react-native';
+
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const placeDetail = props => (
     <Modal
@@ -16,11 +26,9 @@ const placeDetail = props => (
                 {props.selectedPlace ? props.selectedPlace.name : null}
             </Text>
             <View>
-                <Button
-                    title="Delete"
-                    color="red"
-                    onPress={props.onItemDeleted}
-                />
+                <TouchableOpacity>
+                    <Icon size={30} name="ios-trash" color="red" />
+                </TouchableOpacity>
                 <Button title="Close" onPress={props.onModalClosed} />
             </View>
         </View>
